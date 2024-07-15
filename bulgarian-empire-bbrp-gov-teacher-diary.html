@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Diary </title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .message {
+            margin-top: 10px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-section">
+            <h1 class="text-center">School Diary Login</h1>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <p id="login-message" class="message text-center"></p>
+            </form>
+        </div>
+
+        <div id="diary-section" class="hidden">
+            <h1 class="text-center mb-4">School Diary </h1>
+
+            <!-- Attendance Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Attendance</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addAttendance(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="attendance-date">Date:</label>
+                                <input type="date" id="attendance-date" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="attendance-student-name">Student Name:</label>
+                                <input type="text" id="attendance-student-name" class="form-control" list="student-names" required>
+                            </div>
+                            <div class="col">
+                                <label for="attendance-status">Status:</label>
+                                <select id="attendance-status" class="form-control" required>
+                                    <option value="Present">Present</option>
+                                    <option value="Absent">Absent</option>
+                                    <option value="Excused Absence">Excused Absence</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Attendance</button>
+                        <p id="attendance-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Grades Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Grades</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addGrade(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="student-name">Student Name:</label>
+                                <input type="text" id="student-name" class="form-control" list="student-names" required>
+                            </div>
+                            <div class="col">
+                                <label for="subject">Subject:</label>
+                                <input type="text" id="subject" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="grade">Grade:</label>
+                                <input type="number" id="grade" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <input type="text" id="description" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Grade</button>
+                        <p id="grade-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Subject</th>
+                                <th>Grade</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grades-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Homework Tracker Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Homework Tracker</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addHomework(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="homework-date">Date:</label>
+                                <input type="date" id="homework-date" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="homework-subject">Subject:</label>
+                                <input type="text" id="homework-subject" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="homework-description">Description:</label>
+                            <input type="text" id="homework-description" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Homework</button>
+                        <p id="homework-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homework-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Classes Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Classes</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addClass(event)">
+                        <div class="form-group">
+                            <label for="class-name">Class Name:</label>
+                            <input type="text" id="class-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="class-students">Students (comma-separated):</label>
+                            <input type="text" id="class-students" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Class</button>
+                        <p id="class-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Class Name</th>
+                                <th>Students</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classes-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Lessons Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Lessons</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addLesson(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="lesson-date">Date:</label>
+                                <input type="date" id="lesson-date" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="lesson-subject">Subject:</label>
+                                <input type="text" id="lesson-subject" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lesson-content">Content:</label>
+                            <input type="text" id="lesson-content" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Lesson</button>
+                        <p id="lesson-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Content</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lessons-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Events Calendar Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Events Calendar</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addEvent(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="event-date">Date:</label>
+                                <input type="date" id="event-date" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="event-title">Title:</label>
+                                <input type="text" id="event-title" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-description">Description:</label>
+                            <input type="text" id="event-description" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Event</button>
+                        <p id="event-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Student Performance Dashboard Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Student Performance Dashboard</h2>
+                </div>
+                <div class="card-body">
+                    <form onsubmit="addTestResult(event)">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="test-date">Date:</label>
+                                <input type="date" id="test-date" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="test-student-name">Student Name:</label>
+                                <input type="text" id="test-student-name" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="test-subject">Subject:</label>
+                                <input type="text" id="test-subject" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="test-score">Score:</label>
+                                <input type="number" id="test-score" class="form-control" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Add Test Result</button>
+                        <p id="test-message" class="message mt-2"></p>
+                    </form>
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tests-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-danger mb-4" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const storageKeys = {
+            ATTENDANCE: 'attendance_records',
+            GRADES: 'grade_records',
+            HOMEWORK: 'homework_records',
+            CLASSES: 'class_records',
+            LESSONS: 'lesson_records',
+            EVENTS: 'event_records',
+            TESTS: 'test_records'
+        };
+
+        let attendanceRecords = JSON.parse(localStorage.getItem(storageKeys.ATTENDANCE)) || [];
+        let gradeRecords = JSON.parse(localStorage.getItem(storageKeys.GRADES)) || [];
+        let homeworkRecords = JSON.parse(localStorage.getItem(storageKeys.HOMEWORK)) || [];
+        let classRecords = JSON.parse(localStorage.getItem(storageKeys.CLASSES)) || [];
+        let lessonRecords = JSON.parse(localStorage.getItem(storageKeys.LESSONS)) || [];
+        let eventRecords = JSON.parse(localStorage.getItem(storageKeys.EVENTS)) || [];
+        let testRecords = JSON.parse(localStorage.getItem(storageKeys.TESTS)) || [];
+
+        function login(event) {
+            event.preventDefault();
+            const password = document.getElementById("password").value;
+            if (password === "IvanRilski3737!") {
+                document.getElementById("login-section").classList.add("hidden");
+                document.getElementById("diary-section").classList.remove("hidden");
+                populateAttendance();
+                populateGrades();
+                populateHomework();
+                populateClasses();
+                populateLessons();
+                populateEvents();
+                populateTests();
+            } else {
+                document.getElementById("login-message").innerText = "Incorrect password. Please try again.";
+            }
+        }
+
+        function logout() {
+            document.getElementById("login-section").classList.remove("hidden");
+            document.getElementById("diary-section").classList.add("hidden");
+        }
+
+        function addAttendance(event) {
+            event.preventDefault();
+            const date = document.getElementById("attendance-date").value;
+            const studentName = document.getElementById("attendance-student-name").value;
+            const status = document.getElementById("attendance-status").value;
+            attendanceRecords.push({ date, studentName, status });
+            localStorage.setItem(storageKeys.ATTENDANCE, JSON.stringify(attendanceRecords));
+            populateAttendance();
+            document.getElementById("attendance-message").innerText = "Attendance added!";
+        }
+
+        function deleteAttendance(index) {
+            attendanceRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.ATTENDANCE, JSON.stringify(attendanceRecords));
+            populateAttendance();
+        }
+
+        function populateAttendance() {
+            const attendanceBody = document.getElementById("attendance-body");
+            attendanceBody.innerHTML = '';
+            attendanceRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.studentName}</td>
+                    <td>${record.status}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteAttendance(${index})">Delete</button></td>
+                `;
+                attendanceBody.appendChild(row);
+            });
+        }
+
+        function addGrade(event) {
+            event.preventDefault();
+            const studentName = document.getElementById("student-name").value;
+            const subject = document.getElementById("subject").value;
+            const grade = document.getElementById("grade").value;
+            const description = document.getElementById("description").value;
+            gradeRecords.push({ studentName, subject, grade, description });
+            localStorage.setItem(storageKeys.GRADES, JSON.stringify(gradeRecords));
+            populateGrades();
+            document.getElementById("grade-message").innerText = "Grade added!";
+        }
+
+        function deleteGrade(index) {
+            gradeRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.GRADES, JSON.stringify(gradeRecords));
+            populateGrades();
+        }
+
+        function populateGrades() {
+            const gradesBody = document.getElementById("grades-body");
+            gradesBody.innerHTML = '';
+            gradeRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.studentName}</td>
+                    <td>${record.subject}</td>
+                    <td>${record.grade}</td>
+                    <td>${record.description}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteGrade(${index})">Delete</button></td>
+                `;
+                gradesBody.appendChild(row);
+            });
+        }
+
+        function addHomework(event) {
+            event.preventDefault();
+            const date = document.getElementById("homework-date").value;
+            const subject = document.getElementById("homework-subject").value;
+            const description = document.getElementById("homework-description").value;
+            homeworkRecords.push({ date, subject, description });
+            localStorage.setItem(storageKeys.HOMEWORK, JSON.stringify(homeworkRecords));
+            populateHomework();
+            document.getElementById("homework-message").innerText = "Homework added!";
+        }
+
+        function deleteHomework(index) {
+            homeworkRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.HOMEWORK, JSON.stringify(homeworkRecords));
+            populateHomework();
+        }
+
+        function populateHomework() {
+            const homeworkBody = document.getElementById("homework-body");
+            homeworkBody.innerHTML = '';
+            homeworkRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.subject}</td>
+                    <td>${record.description}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteHomework(${index})">Delete</button></td>
+                `;
+                homeworkBody.appendChild(row);
+            });
+        }
+
+        function addClass(event) {
+            event.preventDefault();
+            const className = document.getElementById("class-name").value;
+            const students = document.getElementById("class-students").value.split(",").map(student => student.trim());
+            classRecords.push({ className, students });
+            localStorage.setItem(storageKeys.CLASSES, JSON.stringify(classRecords));
+            populateClasses();
+            document.getElementById("class-message").innerText = "Class added!";
+        }
+
+        function deleteClass(index) {
+            classRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.CLASSES, JSON.stringify(classRecords));
+            populateClasses();
+        }
+
+        function populateClasses() {
+            const classesBody = document.getElementById("classes-body");
+            classesBody.innerHTML = '';
+            classRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.className}</td>
+                    <td>${record.students.join(", ")}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteClass(${index})">Delete</button></td>
+                `;
+                classesBody.appendChild(row);
+            });
+        }
+
+        function addLesson(event) {
+            event.preventDefault();
+            const date = document.getElementById("lesson-date").value;
+            const subject = document.getElementById("lesson-subject").value;
+            const content = document.getElementById("lesson-content").value;
+            lessonRecords.push({ date, subject, content });
+            localStorage.setItem(storageKeys.LESSONS, JSON.stringify(lessonRecords));
+            populateLessons();
+            document.getElementById("lesson-message").innerText = "Lesson added!";
+        }
+
+        function deleteLesson(index) {
+            lessonRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.LESSONS, JSON.stringify(lessonRecords));
+            populateLessons();
+        }
+
+        function populateLessons() {
+            const lessonsBody = document.getElementById("lessons-body");
+            lessonsBody.innerHTML = '';
+            lessonRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.subject}</td>
+                    <td>${record.content}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteLesson(${index})">Delete</button></td>
+                `;
+                lessonsBody.appendChild(row);
+            });
+        }
+
+        function addEvent(event) {
+            event.preventDefault();
+            const date = document.getElementById("event-date").value;
+            const title = document.getElementById("event-title").value;
+            const description = document.getElementById("event-description").value;
+            eventRecords.push({ date, title, description });
+            localStorage.setItem(storageKeys.EVENTS, JSON.stringify(eventRecords));
+            populateEvents();
+            document.getElementById("event-message").innerText = "Event added!";
+        }
+
+        function deleteEvent(index) {
+            eventRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.EVENTS, JSON.stringify(eventRecords));
+            populateEvents();
+        }
+
+        function populateEvents() {
+            const eventsBody = document.getElementById("events-body");
+            eventsBody.innerHTML = '';
+            eventRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.title}</td>
+                    <td>${record.description}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteEvent(${index})">Delete</button></td>
+                `;
+                eventsBody.appendChild(row);
+            });
+        }
+
+        function addTestResult(event) {
+            event.preventDefault();
+            const date = document.getElementById("test-date").value;
+            const studentName = document.getElementById("test-student-name").value;
+            const subject = document.getElementById("test-subject").value;
+            const score = document.getElementById("test-score").value;
+            testRecords.push({ date, studentName, subject, score });
+            localStorage.setItem(storageKeys.TESTS, JSON.stringify(testRecords));
+            populateTests();
+            document.getElementById("test-message").innerText = "Test result added!";
+        }
+
+        function deleteTestResult(index) {
+            testRecords.splice(index, 1);
+            localStorage.setItem(storageKeys.TESTS, JSON.stringify(testRecords));
+            populateTests();
+        }
+
+        function populateTests() {
+            const testsBody = document.getElementById("tests-body");
+            testsBody.innerHTML = '';
+            testRecords.forEach((record, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.studentName}</td>
+                    <td>${record.subject}</td>
+                    <td>${record.score}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteTestResult(${index})">Delete</button></td>
+                `;
+                testsBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
