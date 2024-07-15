@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    echo "# Bulgarian-Empire-BBRP-Gov" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/RadoSavy/Bulgarian-Empire-BBRP-Gov.git
+git push -u origin main
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulgarian Government</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003366;
+            padding: 20px 30px;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .top-bar img {
+            height: 50px;
+        }
+        .top-bar h1 {
+            margin: 0;
+            font-size: 24px;
+            text-align: center;
+        }
+        .social-media {
+            display: flex;
+            gap: 10px;
+        }
+        .social-media a {
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 16px;
+            position: relative;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .nav a:hover {
+            background-color: #0044cc;
+            transform: translateY(-2px);
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            flex: 1;
+        }
+        .news, .guide-section, .latest-announcements, .hall-of-fame, .constitution, .foreign-relations, .cabin-of-executives {
+            margin: 20px 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .news h2, .guide-section h2, .latest-announcements h2, .hall-of-fame h2, .constitution h2, .foreign-relations h2, .cabin-of-executives h2 {
+            background-color: #003366;
+            color: white;
+            padding: 10px;
+            margin: 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .news-item, .announcement-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .news-item:last-child, .announcement-item:last-child {
+            border-bottom: none;
+        }
+        .news p, .guide-section p {
+            padding: 10px 0;
+        }
+        .portal-links {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .portal-link {
+            background-color: #0056b3;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px;
+            flex: 1;
+            min-width: 150px;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .portal-link:hover {
+            background-color: #0044cc;
+            transform: translateY(-2px);
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .interactive-map {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e6e9ef;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .interactive-map iframe {
+            border: 0;
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+        }
+        .guide-section a {
+            color: #0056b3;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Coat_of_arms_of_Bulgaria.png" width="0" height="50" alt="Bulgarian Flag"> 
+        <h1>БЪЛГАРСКО ПРАВИТЕЛСТВО | BULGARIAN EMPIRE</h1>
+        <div class="social-media">
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+    <div class="nav">
+        <a href="#home">Home</a>
+        <a href="#guide-section">Join the Bulgarian Forces</a>
+        <a href="#hall-of-fame">Hall of Fame</a>
+        <a href="#constitution">Constitution</a>
+        <a href="#foreign-relations">Foreign Relations</a>
+        <a href="#cabin-of-executives">Cabin of Executives</a>
+    </div>
+    <div class="container" id="home">
+        <div class="news">
+            <h2>Latest News</h2>
+            <div class="news-item">
+                <p>06.07.2024 | We won the war against the Romanian Government and the coupers took power of Romania.</p>
+            </div>
+            <div class="news-item">
+                <p>30.06.2024 | Recent criticisms from country leaders highlight biased war management, sparked by the Bulgaria-Romania conflict and Kosovo-Serbia delays.</p>
+            </div>
+            <div class="news-item">
+                <p>24.06.2024 | An impending war between Romania and Bulgaria led to heightened tensions, with interviews scheduled soon.</p>
+            </div>
+            <p>Welcome to the official website of the Bulgarian Government. Here you will find the latest news and updates.</p>
+            <p>Bulgaria stands as one of the most developed and proud nations in all of BBRP, with a rich and storied history defining its strength and resilience.</p>
+        </div>
+        <div class="guide-section" id="guide-section">
+            <h2>Join the Bulgarian Forces: A Step-by-Step Guide</h2>
+            <p><strong>Are You Eligible?</strong><br>You must be at least 13 years old.</p>
+            <p><strong>Get Ready:</strong><br>Learn about the roles and what's expected of you.</p>
+            <p><strong>How to Join a Tryout:</strong><br>Request a tryout from the request tryout channel in the discord server. Wait for a High Rank to respond. If accepted, join the tryout through the given link in the tryout channel.</p>
+            <p><strong>During the Tryout:</strong><br>Be on time for all sessions. Be prepared for physical tests, directions, and shooting. Show your dedication and abilities.</p>
+            <p><strong>To Pass the Tryout:</strong><br>Stand out with your performance. Display discipline, ability to work in a team, and resolve. If you make it, direct message (DM) the host on Discord for the next steps.</p>
+            <p>This is your chance to serve Bulgaria. Make it count. Good luck!</p>
+        </div>
+        <div class="hall-of-fame" id="hall-of-fame">
+            <h2>Hall of Fame</h2>
+            <p>Our Hall of Fame celebrates the heroes and leaders who have made significant contributions to the Bulgarian Empire.</p>
+            <div class="news-item">
+                <p>Hero 1: Drobnai - Has been tsar, president and vice president of the Bulgarian people. Defended the country with his heart, amazing person.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 2: Darko - Has been president 3 times, tsar twice and 6 times vice-president. Has been banned 3 times just for the sake of the country's good. Army marshal and leader.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 3: Saul Goodman Two times vice-president, one of the longest lasting bulgarian politician, well known figure and great, skilled army leader.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 4: Barb - Retired vice-president, government member and army general of Bulgaria. Not very known, but changed sides multiple times. Overall amazing job for a country that isn't even his!</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 5: Borkata - Retired overthrown bulgarian president, wanted peace with the muslim nations, big anti-serb, but amazing army general - one of the strongest bulgarian soldiers. Now he's in Kosovo.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 6: Turbat - Great singer, important key figure in the modern bulgarian history, vice-president and pro-serb. Good skills and one of the best high army ranks.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 7: Bigmac - Prime minister, government member and very good army general. Did good for the bulgarians and fought in many wars.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 8: BulgarianBacon - A very long lasting bulgarian army member. Fought in over 10 wars, showing good skills and obedience.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 8: Unknown - Former Bulgarian prime minister, good politic and a person caring for Bulgaria, helping in many wars and hard situations. </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 9: Nikolovo Fighter - former neo-facsist, ultranationalist vice-president of Bulgaria. IP banned and executed from BBRP. Did a lot for the army </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 10: Rafailovv - Unknown. President of Bulgaria. Brought key figures of modern Bulgaria into the game. Amazing army leader.</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 11: Хитър Петър Gaming - First ever Bulgarian president. Brought insanely important figures into the game. Lasted 2 days, but made elections. BBRP had 130 members...</p>
+            </div>
+            <div class="news-item">
+                <p>Hero 12: Patriarch Ivailo of Bulgaria - Absolute unit of a millitarial figure. Lead the country in all wars against the BA. </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 13: Exernity - Gov. Member and long lasting army general. Founder of the epik sussy bot. Good skills. </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 14: Marshala Na Rotata - Maxwell the cat enjoyer. Amazing skills, good general skills. I love that kaka </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 15: T3bata - New government member, long lasting army personell, very good skills, decent commanding and a great person </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 16: MILE KITIC JR [GEN] - My boy N'Golo, best black person in the game, one of our best mid ranked army members, amazing skills  </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 17: "I dont care" - Tremix. One of the older army members, amazing combat skills and fought in a lot of wars </p>
+            </div>
+            <div class="news-item">
+                <p>Hero 18: Hans - one of the most active army members, amazing combat skills and fought in so much wars, always online. </p>
+            </div>
+            <!-- Add more heroes as needed -->
+        </div>
+        <div class="constitution" id="constitution">
+            <h2>Constitution</h2>
+            <p>Our constitution is the foundation of our nation's laws and governance. Here are some key points:</p>
+            <div class="news-item">
+                <p>Article 1: (1.1) Bulgaria is an Empire with elected ministers.</p>
+            </div>
+            <div class="news-item">
+                <p>Article 2: No soldier part of the (2.1) Bulgarian Army or (2.2) Police Officer part of the Bulgarian Police is allowed to patrol around Sofia or any border without a uniform, (2.3) If caught without the service uniform the punishment can range from warning to physical exercise as jumping jacks.</p>
+            </div>
+            <div class="news-item">
+                <p>Article 3: Civilians with Passports from countries with bad diplomatic relations are (3.1) REQUIRED by the Constitution to carry their passport at all times, (3.2) if seen with no passport within the country they can legally get killed. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 4: Any member who is part of the Bulgarian Government who is caught taking any (4.1) bribes or (4.2) being corrupt will get the (4.3) death sentence and (4.4) be exiled from the Government. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 5: If a party of over 4 army members show up at the border they are instantly declined access (5.1) unless they are from (Turkey/Croatia/Greece) </p>
+            </div>
+            <div class="news-item">
+                <p>Article 6: Soldiers from the following countries (Turkey/Croatia/Greece) are permitted access to Bulgaria without the need for a passport. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 7: Homosexuality, (7.1) Transsexuality and gender swaps are prohibited in Bulgaria. (7.2) Countries that have transgender government officials and citizens are prohibited from entering (7.3) even if it's Thracian Union members. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 8: Communism is illegal. This is not a joke, but the ideology of communism & or (8.1) socialism is strictly prohibited in the actual state & recreated variants of Bulgaria. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 9: Failure to complete any of the tasks shown above will most likely result in penalisation such as demotion & mutes. (9.1) However, the punishment inflicted is not restricted to these items and may include yet not limited to Warns, Demotions and Expulsion from the Country. (9.2) Higher-ups are free to go as far as they need to feel that they have made a fair punishment for any given action. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 10: If any civilian is caught within the borders of The Bulgarian Tsardom without a passport by the (10.1) Bulgarian Army or (10.2) Bulgarian Police they have the right to kill that person on sight.  </p>
+            </div>
+            <div class="news-item">
+                <p>Article 11: The Bulgarian constitution prohibits racial disrespect between (11.1) soldiers and (11.2) police officers, (11.3)  if caught their consequences could even reach (11.4) demotion or (11.5) temporary bans. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 12: The Anthem of the Bulgarian Tsardom is the song "Shumi Maritsa". </p>
+            </div>
+            <div class="news-item">
+                <p>Article 13: The capital of the Tsardom of Bulgaria is the city of Sofia. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 14: Every Bulgarian Tsar, Emperor, or President must be of Bulgarian nationality to rule the country. Foreigners are ineligible for leadership positions. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 15: The Tsar, Emperor, President or Prince has the authority to reject any individual from becoming an Army, Police or Government member. </p>
+            </div>
+            <div class="news-item">
+                <p>Article 16: Citizens of the Bulgarian Empire have the right to freedom of speech and expression. (16.1) This right includes the freedom to express ideas, and beliefs through various forms of communication, including written, verbal, and artistic expression. (16.2) However, this freedom shall not be used to incite violence, hatred, or harm to others. </p>
+            </div>
+            <!-- Add more articles as needed -->
+        </div>
+        <div class="foreign-relations" id="foreign-relations">
+            <h2>Foreign Relations</h2>
+            <p> Foreign Relations of the Bulgarian Empire </p>
+            
+               <p> 🟪 - Brothers </p>
+               <p>🟦 - Very good relations</p>
+                <p>🟩 - Good relations</p>
+              <p> 🟨 - Neutral relations</p>
+                <p> 🟧 - Have problems</p>
+                <p>  🟥 - Bad relations</p>
+                <p> ⬛ - Worst possible relations </p>
+                
+                </h2>Diplomatic docs and others:</h2>
+                <p>Thracian Union - 🔰</p>
+                 <p>ℹ️ - Non-Aggression pact </p>
+                
+                <p> Passport acceptation status:</p>
+               <p>🟣 - This country's passport is accepted - soldiers do not need to show a passport to enter</p>
+             <p>🔵 - This country's passport is accepted - no reason for entry has to be stated.</p>
+                <p>🟢 - This country's passport is accepted - a reason for entry has to be stated.</p>
+              <p>🟡 - This country's passport is accepted unless they have a weapon - the reason for entry has to be stated.</p>
+                <p>🟠 - Civilians of this country will not be accepted - only soldiers with a reason for entry can be accepted.</p>
+              <p>🔴 - This country's passport is not accepted - if they do not leave the border when requested they can be shot.</p>
+                <p>⚫ - This country's passport is not accepted - if shown, shoot the individual directly:</p>
+            <div class="news-item">
+                <p>Country 1: Serbia - 🟧 </p>
+                 <p> Comment: No comment</p>
+                 <p> Diplomatic docs: ❌</p>
+                 <p> Passport: 🟠 </p>
+                 <p> Serbian Empire</p>
+            </div>
+            <div class="news-item">
+                 <p> Country 2: Montenegro - 🟨  </p>
+                 <p> Comment: Neither Presidents have made efforts to improve them</p>
+                 <p> Diplomatic docs: ❌</p>
+                 <p> Passport: 🟡</p>
+                 <p> First Montenegrin Empire </p>
+            </div>
+            <div class="news-item">
+                <p> Country 3: Turkey - 🟦</p>
+                <p>Comment: The coup has won, BU members </p>
+                <p> Diplomatic docs: ℹ️</p>
+                <p> Passport: 🟢</p>
+                <p> Republic of Türkiye  </p>
+           </div>
+           <div class="news-item">
+            <p> Country 4: Greece - 🟦</p>
+            <p> Comment: No comment</p>
+            <p> Diplomatic docs: ℹ️;🔰 </p>
+            <p> Passport: 🔵</p>
+            <p> Hellenic National Union </p>
+             </div>
+            <div class="news-item">
+             <p> Country 5: Romania - 🟩</p>
+             <p> Comment: No comment</p>
+             <p> Diplomatic docs: ❌ </p>
+              <p> Passport: 🟢</p>
+             <p> Kingdom of Romania  </p>
+            </div>
+            <div class="news-item">
+                <p> Country 6: North Macedonia - ⬛</p>
+                <p> Comment: Kill on Sight</p>
+                <p> Diplomatic docs: ❌ </p>
+                <p> Passport: ⚫</p>
+                <p> Macedonian Military Junta </p>
+           </div>
+           <div class="news-item">
+            <p> Country 7: Bosnia - 🟦</p>
+            <p> Comment: No comment</p>
+            <p> Diplomatic docs: ❌ </p>
+            <p> Passport: 🟢</p>
+            <p> Sultanate of Bosnia and Herzegovina </p>
+        </div>
+        <div class="news-item">
+            <p> Country 7: Kosovo - 🟦</p>
+            <p> Comment: May be neighbours soon</p>
+            <p> Diplomatic docs: ❌ </p>
+            <p> Passport: 🟢</p>
+            <p> Emirate of Dardania  </p>
+        </div>
+        <div class="news-item">
+            <p> Country 7: Croatia - 🟪</p>
+            <p> Comment:Brothers, closest country as of now, hope to be as long as possible  </p>
+            <p> Diplomatic docs: 🔰 </p>
+            <p> Passport:🟣 </p>
+            <p> Kingdom of Croatia  </p>
+        </div>
+        <div class="news-item">
+            <p> Country 7: Slovenia - 🟧</p>
+            <p> Comment: No comment </p>
+            <p> Diplomatic docs: ℹ️ </p>
+            <p> Passport:🟠 </p>
+            <p> First Slovenian Empire  </p>
+        </div>
+            <!-- Add more countries as needed -->
+        </div>
+        <div class="cabin-of-executives" id="cabin-of-executives">
+            <h2>Cabin of Executives</h2>
+            <p>Meet the leaders who are driving the Bulgarian Empire forward:</p>
+            <div class="news-item">
+                <p>Emperor: Alexander VI of Bulgaria </p>
+            </div>
+            <div class="news-item">
+                <p>Princes: Prince Darko VI of Varna and Prince Rado III of Varna</p>
+            </div>
+            <div class="news-item">
+                <p>Princess: Princess Karina I </p>
+            </div>
+            <div class="news-item">
+                <p>Ministery:</p>
+                <p> Prime Minister: Brother_JosipBroz</p>
+                <p> Minister of Internal Affairs: Pan Kacperek</p>
+                <p> Minister of Economy: Mr. Marketing </p>
+                <p> Minister of Foreign Affairs: Emperor Alexander VI of Bulgaria , Prince Rado III of Varna & Brother_JosipBroz </p>
+                <p> Minister of Defence and Security: Aca</p>
+
+            </div>
+            <!-- Add more executives as needed -->
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Bulgarian Government. All rights reserved.</p>
+    </footer>
+</body>
+</html>
